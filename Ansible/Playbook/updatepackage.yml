@@ -24,7 +24,7 @@
       when: apt_update.changed  # Only run if the cache was updated
 
       # Check if reboot is required
-    - name: check if system reboot is required
+    - name: Check if System Reboot is Required
       become: true
       stat:
         path: /var/run/reboot-required
