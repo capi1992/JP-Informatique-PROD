@@ -4,10 +4,10 @@
     # Upgrade packages
     - name: upgrade apt packages
       become: true
-      ignore_errors: yes
       apt:
         upgrade: yes
         update_cache: yes
+        ignore_errors: yes
 
     # Check if reboot is required
     - name: check if system reboot is required
