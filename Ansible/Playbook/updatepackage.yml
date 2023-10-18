@@ -1,20 +1,27 @@
-- hosts: "server"
+- name: Update and Upgrade Ubuntu Servers
+  hosts: server
+  become: yes  # Use "become" to run tasks with sudo
 
-  become: yes
   tasks:
-    # Upgrade packages
-    - name: upgrade apt packages
-      become: yes
+    - name: Update APT Cache
       apt:
-        upgrade: yes
         update_cache: yes
+      register: apt_update
 
-    # Check if reboot is required
-    - name: check if system reboot is required
-      become: yes
-      stat:
-        path: /var/run/reboot-required
-      register: reboot_required
+    - name: Perform APT Upgrade
+      apt:
+        upgrade: safe
+      when: apt_update.changed  # Only run if the cache was updated
+
+    - name: Perform APT Autoremove
+      apt:
+        autoremove: yes
+      when: apt_update.changed  # Only run if the cache was updated
+
+    - name: Perform APT Autoclean
+      apt:
+        autoclean: yes
+      when: apt_update.changed  # Only run if the cache was updated
 
     # Send Discord message when reboot is required
     - name: Send Discord message
