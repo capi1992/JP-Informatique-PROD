@@ -1,6 +1,7 @@
 - hosts: "server"
 
   become: yes
+  
     # Upgrade packages
     - name: upgrade apt packages
       become: true
