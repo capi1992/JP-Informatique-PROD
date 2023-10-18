@@ -1,4 +1,4 @@
-- hosts: "{{ hosts }}"
+- hosts: "{{ server }}"
 
   become: yes
   tasks:
@@ -15,3 +15,15 @@
       stat:
         path: /var/run/reboot-required
       register: reboot_required
+
+    # Send Discord message when reboot is required
+    - name: Send Discord message
+      uri:
+        url: "https://discord.com/api/webhooks/1164117309955248219/swkj3BLJNSETIn_negQcaBMrJnPUdw_BqOMuykzrzB2TMrGzRUTdxmt478Y2JcJfs3lu"
+        method: POST
+        body_format: json
+        body: '{"content": "Reboot required on {{ inventory_hostname }}"}'
+        headers:
+          Content-Type: application/json
+        status_code: 204
+      when: reboot_required.stat.exists
