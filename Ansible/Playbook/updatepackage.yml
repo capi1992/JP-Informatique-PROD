@@ -47,9 +47,11 @@
     - name: Wait for SSH to become available
       wait_for:
         host: "{{ inventory_hostname }}"
-        port: 49222
+        port: 22
         state: started
-        timeout: 120  # Adjust the timeout as needed
+        timeout: 600  # Adjust the timeout as needed
+      register: ssh_result
+      ignore_errors: yes
 
     - name: Send Discord message on successful reboot
       uri:
