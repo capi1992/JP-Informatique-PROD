@@ -3,9 +3,9 @@
   become: yes
   tasks:
     - name: Retry upgrade APT packages
-       command: sleep 10
-       retries: 5
-       ignore_errors: yes
+      command: sleep 10
+      retries: 5
+      ignore_errors: yes
        
     # Upgrade packages
     - name: upgrade apt packages
