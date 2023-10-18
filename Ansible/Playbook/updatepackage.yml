@@ -48,9 +48,9 @@
     - name: Wait for SSH to become available
       wait_for:
         host: "{{ inventory_hostname }}"
-        port: 22
+        port: 49222
         state: started
-        timeout: 600  # Adjust the timeout as needed
+        timeout: 120  # Adjust the timeout as needed
       register: ssh_result
       ignore_errors: yes
 
