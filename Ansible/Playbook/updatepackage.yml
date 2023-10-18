@@ -60,7 +60,7 @@
         headers:
           Content-Type: application/json
         status_code: 204
-      when: not reboot_required.stat.exists  # Skip the task if no reboot was required
+      when: reboot_required.stat.exists  # Only run the task if a reboot has occurred
 
 
 
