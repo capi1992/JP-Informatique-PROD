@@ -1,4 +1,3 @@
----
 - name: Update and Upgrade Ubuntu Servers
   hosts: server
   become: yes
@@ -51,8 +50,7 @@
         port: 49222
         state: started
         timeout: 120  # Adjust the timeout as needed
-      register: ssh_result
-      ignore_errors: yes
+      when: reboot_required.stat.exists
 
     - name: Send Discord message on successful reboot
       uri:
@@ -60,7 +58,4 @@
         method: POST
         body_format: json
         body: '{"content": "Server {{ inventory_hostname }} has successfully rebooted."}'
-        headers:
-          Content-Type: application/json
-        status_code: 204
       when: not reboot_required.stat.exists  # Skip the task when no reboot is required
