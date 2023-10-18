@@ -1,6 +1,6 @@
 ---
 - name: Update and Upgrade Ubuntu Servers
-  hosts: my_hosts
+  hosts: "{{ hostvars['server'].my_hosts }}"
   become: yes
 
   tasks:
@@ -32,7 +32,7 @@
 
     - name: Send Discord message
       uri:
-        url: "my_discord"
+        url: "{{ hostvars['server'].my_discord }}"
         body: '{"content": "Reboot required on {{ inventory_hostname }}"}'
         headers:
           Content-Type: application/json
@@ -53,7 +53,7 @@
 
     - name: Send Discord message on successful reboot
       uri:
-        url: "my_discord"
+        url: "{{ hostvars['server'].my_discord }}"
         method: POST
         body: '{"content": "Server {{ inventory_hostname }} has successfully rebooted."}'
         body_format: json  # Specify that the body is in JSON format
