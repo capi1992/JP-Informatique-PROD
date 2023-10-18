@@ -1,3 +1,4 @@
+---
 - name: Update and Upgrade Ubuntu Servers
   hosts: server
   become: yes
@@ -62,4 +63,4 @@
         headers:
           Content-Type: application/json
         status_code: 204
-      when: not ssh_result.failed
+      when: not reboot_required.stat.exists  # Skip the task when no reboot is required
