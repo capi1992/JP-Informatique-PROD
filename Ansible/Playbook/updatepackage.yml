@@ -49,4 +49,4 @@
         host: "{{ inventory_hostname }}"
         port: 49222
         state: started
-        timeout: 600  # Adjust the timeout as needed
+        timeout: 120  # Adjust the timeout as needed
