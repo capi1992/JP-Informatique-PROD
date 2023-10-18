@@ -41,3 +41,7 @@
           Content-Type: application/json
         status_code: 204
       when: reboot_required.stat.exists
+
+      - name: Reboot the server if required
+      reboot:
+      when: reboot_required.rc == 0
