@@ -42,5 +42,11 @@
 
     - name: Reboot the server if required
       reboot:
-        post_reset_delay: 120  # Adjust this value as needed
       when: reboot_required.stat.exists
+
+    - name: Wait for SSH to become available
+      wait_for:
+        host: "{{ inventory_hostname }}"
+        port: 49222
+        state: started
+        timeout: 600  # Adjust the timeout as needed
