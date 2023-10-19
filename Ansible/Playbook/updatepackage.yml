@@ -1,6 +1,6 @@
 ---
 - name: Update and Upgrade Ubuntu Servers
-  hosts: ${{ HOSTS }}
+  hosts: server
   become: yes
 
   tasks:
