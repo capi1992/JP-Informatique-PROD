@@ -1,0 +1,49 @@
+---
+version: "2.1"
+services:
+  unifi-network-application:
+    image: lscr.io/linuxserver/unifi-network-application:latest
+    container_name: unifi-network-application
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=Europe/Luxembourg
+      - MONGO_USER=jpunifi
+      - MONGO_PASS=jfpg23111992
+      - MONGO_HOST=unifi-db
+      - MONGO_PORT=27017
+      - MONGO_DBNAME=unifidb
+      #- MEM_LIMIT=1024 #optional
+      #- MEM_STARTUP=1024 #optional
+    volumes:
+      - unifi_web:/config
+    ports:
+      - 8443:8443
+      - 3478:3478/udp
+      - 10001:10001/udp
+      - 8080:8080
+      - 1900:1900/udp #optional
+      - 8843:8843 #optional
+      - 8880:8880 #optional
+      - 6789:6789 #optional
+      - 5514:5514/udp #optional
+    restart: unless-stopped
+    networks:
+      - nginx-proxy-manager
+  unifi-db:
+    image: docker.io/mongo:4.4
+    container_name: unifi-db
+    volumes:
+      - unifi_db:/data/db
+      - /var/lib/docker/volumes/unifi-network-application_unifi_db/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+    restart: unless-stopped
+    networks:
+      - nginx-proxy-manager_default
+      
+volumes:
+  unifi_web:
+  unifi_db:
+
+networks:
+  nginx-proxy-manager:
+    external: true
