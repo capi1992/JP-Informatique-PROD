@@ -3,7 +3,7 @@ services:
   app:
     image: 'jc21/nginx-proxy-manager:latest'
     deploy:
-      mode: global
+      replicas: 3
     restart: unless-stopped
     ports:
       # These ports are in format <host-port>:<container-port>
