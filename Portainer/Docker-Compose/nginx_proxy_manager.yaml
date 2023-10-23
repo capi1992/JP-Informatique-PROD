@@ -22,8 +22,8 @@ services:
       # Uncomment this if IPv6 is not enabled on your host
       # DISABLE_IPV6: 'true'
     volumes:
-      - nginx_data:/data
-      - nginx_letsencrypt:/etc/letsencrypt
+      - nginx-data:/data
+      - nginx-letsencrypt:/etc/letsencrypt
     depends_on:
       - db
 
@@ -38,7 +38,7 @@ services:
       MYSQL_USER: 'npm'
       MYSQL_PASSWORD: 'npm'
     volumes:
-      - nginx_mysql:/var/lib/mysql
+      - nginx-mysql:/var/lib/mysql
 
 volumes:
   nginx_data:
@@ -46,16 +46,16 @@ volumes:
     driver_opts:
       type: nfs
       o: addr=94.252.124.252
-      device: ":/mnt/MainPool/JP-Informatique_Volumes/"
+      device: ":/mnt/MainPool/JP-Informatique_Volumes/nginx-data"
   nginx_letsencrypt:
     driver: local
     driver_opts:
       type: nfs
       o: addr=94.252.124.252
-      device: ":/mnt/MainPool/JP-Informatique_Volumes/"
+      device: ":/mnt/MainPool/JP-Informatique_Volumes/nginx-letsencrypt"
   nginx_mysql:
     driver: local
     driver_opts:
       type: nfs
       o: addr=94.252.124.252
-      device: ":/mnt/MainPool/JP-Informatique_Volumes/"
+      device: ":/mnt/MainPool/JP-Informatique_Volumes/nginx-mysql"
