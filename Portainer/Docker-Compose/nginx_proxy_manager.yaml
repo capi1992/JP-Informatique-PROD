@@ -44,4 +44,8 @@ volumes:
   nginx_data:
   nginx_letsencrypt:
   nginx_mysql:
+    driver_opts:
+      type: "nfs"
+      o: "addr=94.252.124.252,rw"
+      device: ":/mnt/MainPool/JP-Informatique_Volumes"
   
