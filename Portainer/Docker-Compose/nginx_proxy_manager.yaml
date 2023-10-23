@@ -42,12 +42,20 @@ services:
 
 volumes:
   nginx_data:
-  nginx_letsencrypt:
-  nginx_mysql:
-nfsvolume:  # Define the NFS volume here
     driver: local
     driver_opts:
       type: nfs
       o: addr=$NFSIP
       device: ":/mnt/MainPool/JP-Informatique_Volumes"
-  
+  nginx_letsencrypt:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=$NFSIP
+      device: ":/mnt/MainPool/JP-Informatique_Volumes"
+  nginx_mysql:
+    driver: local
+    driver_opts:
+      type: nfs
+      o: addr=$NFSIP
+      device: ":/mnt/MainPool/JP-Informatique_Volumes"
