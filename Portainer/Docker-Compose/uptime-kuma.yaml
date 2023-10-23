@@ -10,11 +10,11 @@ services:
       - "3001:3001"  # <Host Port>:<Container Port>
     restart: always
     networks:
-      - nginx-proxy-manager
+      - nginx-proxy-manager_default
 
 volumes:
   uptime-kuma:
 
 networks:
-  nginx-proxy-manager:
+  nginx-proxy-manager_default:
     external: true
