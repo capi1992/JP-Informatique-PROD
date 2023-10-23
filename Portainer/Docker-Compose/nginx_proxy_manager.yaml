@@ -46,16 +46,16 @@ volumes:
     driver_opts:
       type: nfs
       o: addr=94.252.124.252
-      device: ":/mnt/MainPool/JP-Informatique_Volumes"
+      device: ":/mnt/MainPool/JP-Informatique_Volumes/"
   nginx_letsencrypt:
     driver: local
     driver_opts:
       type: nfs
       o: addr=94.252.124.252
-      device: ":/mnt/MainPool/JP-Informatique_Volumes"
+      device: ":/mnt/MainPool/JP-Informatique_Volumes/"
   nginx_mysql:
     driver: local
     driver_opts:
       type: nfs
       o: addr=94.252.124.252
-      device: ":/mnt/MainPool/JP-Informatique_Volumes"
+      device: ":/mnt/MainPool/JP-Informatique_Volumes/"
