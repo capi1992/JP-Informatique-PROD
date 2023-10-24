@@ -41,7 +41,7 @@ volumes:
     driver: local
     driver_opts:
       type: "nfs4"
-      o: "addr=NFS_SERVER_IP,rw"
+      o: "addr=94.252.124.252,,rw"
       device: ":/mnt/MainPool/JP-Informatique_Volumes/traefik-acme"
 
 networks:
