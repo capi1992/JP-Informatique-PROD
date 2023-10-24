@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  traefik:
+    image: traefik:latest
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker.swarmMode=true"
+      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
+      - "--providers.docker.network=traefik-public"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=your-email@example.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - traefik-config:/etc/traefik
+      - traefik-acme:/acme.json
+    networks:
+      - traefik-public
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      replicas: 1
+
+volumes:
+  traefik-config:
+    driver: nfs
+    driver_opts:
+      type: "nfs4"
+      o: "addr=94.252.124.252,rw"
+      device: ":/mnt/MainPool/JP-Informatique_Volumes/traefik-config"
+
+  traefik-acme:
+    driver: nfs
+    driver_opts:
+      type: "nfs4"
+      o: "addr=NFS_SERVER_IP,rw"
+      device: ":/mnt/MainPool/JP-Informatique_Volumes/traefik-acme"
+
+networks:
+  traefik-public:
+    driver: overlay
+
