@@ -30,7 +30,7 @@ services:
   db:
     image: 'jc21/mariadb-aria:latest'
     deploy:
-      replicas: 1
+      mode: global
     restart: unless-stopped
     environment:
       MYSQL_ROOT_PASSWORD: 'npm'
@@ -42,20 +42,5 @@ services:
 
 volumes:
   nginx_data:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=94.252.124.252,vers=4
-      device: ":/mnt/MainPool/JP-Informatique_Volumes/nginx_data"
   nginx_letsencrypt:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=94.252.124.252,vers=4
-      device: ":/mnt/MainPool/JP-Informatique_Volumes/nginx_letsencrypt"
   nginx_mysql:
-    driver: local
-    driver_opts:
-      type: nfs
-      o: addr=94.252.124.252,vers=4
-      device: ":/mnt/MainPool/JP-Informatique_Volumes/nginx_mysql"
