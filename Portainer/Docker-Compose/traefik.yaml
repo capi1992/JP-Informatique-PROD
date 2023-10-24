@@ -33,15 +33,15 @@ volumes:
   traefik-config:
     driver: local
     driver_opts:
-      type: "nfs4"
-      o: "addr=94.252.124.252,rw"
+      type: "nfs"
+      o: "addr=94.252.124.252,rw,vers=4"
       device: ":/mnt/MainPool/JP-Informatique_Volumes/traefik-config"
 
   traefik-acme:
     driver: local
     driver_opts:
-      type: "nfs4"
-      o: "addr=94.252.124.252,,rw"
+      type: "nfs"
+      o: "addr=94.252.124.252,,rw,vers=4"
       device: ":/mnt/MainPool/JP-Informatique_Volumes/traefik-acme"
 
 networks:
