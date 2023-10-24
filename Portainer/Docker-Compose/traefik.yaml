@@ -12,7 +12,7 @@ services:
       - "--entrypoints.web.address=:80"
       - "--entrypoints.websecure.address=:443"
       - "--certificatesresolvers.jp-informatique.acme.tlschallenge=true"
-      - "--certificatesresolvers.jp-informatique.acme.email=your-jaime@jp-informatique.lu"
+      - "--certificatesresolvers.jp-informatique.acme.email=jaime@jp-informatique.lu"
       - "--certificatesresolvers.jp-informatique.acme.storage=/acme.json"
     ports:
       - "80:80"
