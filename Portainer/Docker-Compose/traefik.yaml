@@ -1,50 +1,22 @@
-version: '3.8'
-
+---
+# -- (Optional) When using a custom network
+# networks:
+#   your-traefik-network:
+#     external: true
 services:
   traefik:
-    image: traefik:latest
-    command:
-      - "--api.insecure=true"
-      - "--providers.docker.swarmMode=true"
-      - "--providers.docker.endpoint=unix:///var/run/docker.sock"
-      - "--providers.docker.network=traefik-public"
-      - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.jp-informatique.acme.tlschallenge=true"
-      - "--certificatesresolvers.jp-informatique.acme.email=jaime@jp-informatique.lu"
-      - "--certificatesresolvers.jp-informatique.acme.storage=/acme.json"
+    image: traefik:v2.10.4
+    container_name: traefik
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
+      # -- (Optional) Enable Dashboard, don't do in production
+      - 8080:8080
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - traefik-config:/etc/traefik
-      - traefik-acme:/acme.json
-    networks:
-      - traefik-public
-    deploy:
-      placement:
-        constraints:
-          - node.role == manager
-      replicas: 1
-
-volumes:
-  traefik-config:
-    driver: local
-    driver_opts:
-      type: "nfs"
-      o: "addr=94.252.124.252,rw,vers=4"
-      device: ":/mnt/MainPool/JP-Informatique_Volumes/traefik-config"
-
-  traefik-acme:
-    driver: local
-    driver_opts:
-      type: "nfs"
-      o: "addr=94.252.124.252,,rw,vers=4"
-      device: ":/mnt/MainPool/JP-Informatique_Volumes/traefik-acme"
-
-networks:
-  traefik-public:
-    driver: overlay
+      - ./config:/etc/traefik
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    # -- (Optional) When using Cloudflare as Cert Resolver
+    environment:
+    - CF_DNS_API_TOKEN=$ID
+    restart: unless-stopped
 
