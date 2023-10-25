@@ -1,5 +1,11 @@
 version: '3.7'
 
+networks:
+  frontend:
+    external: true
+  backend:
+    external: true
+
 services:
   traefik:
     image: traefik:2.10.4
@@ -19,9 +25,6 @@ services:
       - backend
     deploy:
       replicas: 2  # Adjust the number of replicas as needed for high availability
-    update_config:
-      parallelism: 1
-      delay: 10s
     restart_policy:
       condition: on-failure
     placement:
