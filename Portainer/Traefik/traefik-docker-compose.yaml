@@ -1,17 +1,18 @@
----
+version: '3.7'
+
 networks:
   frontend:
     external: true
   backend:
     external: true
+
 services:
   traefik:
-    container_name: traefik
     image: traefik:2.10.4
     ports:
-      - 80:80
-      - 443:443
-      - 8080:8080
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - ./config/traefik.yaml:/etc/traefik/traefik.yaml:ro
@@ -22,4 +23,13 @@ services:
     networks:
       - frontend
       - backend
-    restart: unless-stopped
+    deploy:
+      replicas: 1  # Adjust the number of replicas as needed for high availability
+    update_config:
+      parallelism: 1
+      delay: 10s
+    restart_policy:
+      condition: on-failure
+    placement:
+      constraints:
+        - node.role == manager
