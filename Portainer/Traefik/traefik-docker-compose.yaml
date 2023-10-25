@@ -1,11 +1,5 @@
 version: '3.7'
 
-networks:
-  frontend:
-    external: true
-  backend:
-    external: true
-
 services:
   traefik:
     image: traefik:2.10.4
